@@ -11,7 +11,7 @@ steps:
           echo "Directory 'wholesale_dag_examples' already exists, skipping clone step."
         fi
 
-  # Install dependencies and run unittest tests
+  # Install dependencies and run unittest tests for inventory DAG
   - name: 'python:3.10'
     entrypoint: 'bash'
     args:
@@ -19,9 +19,9 @@ steps:
       - |
         cd wholesale_dag_examples
         pip install -r requirements.txt
-        python -m unittest discover tests -p "*_unittest.py"
+        python -m unittest discover tests -p "test_inventory_dag.py"
 
-  # Install dependencies, install pytest, and run pytest tests
+  # Install dependencies and run pytest tests for inventory DAG
   - name: 'python:3.10'
     entrypoint: 'bash'
     args:
@@ -30,7 +30,27 @@ steps:
         cd wholesale_dag_examples
         pip install -r requirements.txt
         pip install pytest
-        pytest tests
+        pytest tests/test_inventory_dag_pytest.py
+
+  # Install dependencies and run unittest tests for orders DAG
+  - name: 'python:3.10'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        cd wholesale_dag_examples
+        pip install -r requirements.txt
+        python -m unittest discover tests -p "test_orders_dag.py"
+
+  # Install dependencies and run pytest tests for orders DAG
+  - name: 'python:3.10'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        cd wholesale_dag_examples
+        pip install -r requirements.txt
+        pip install pytest
+        pytest tests/test_orders_dag_pytest.py
 
   # ... Other steps for deployment or further testing.
-
