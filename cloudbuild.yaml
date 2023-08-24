@@ -20,11 +20,14 @@ steps:
         cd wholesale_dag_examples
         python -m unittest discover tests -p "*_unittest.py"
 
-  # Run pytest tests
+  # Install pytest and run pytest tests
   - name: 'python:3.10'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
         cd wholesale_dag_examples
+        pip install pytest
         pytest tests
+
+  # ... Other steps for deployment or further testing.
