@@ -5,7 +5,7 @@ class TestInventoryManagementDAG(unittest.TestCase):
 
     def setUp(self):
         self.dagbag = DagBag(include_examples=False)
-        self.dag_id = 'inventory_management_dag'
+        self.dag_id = 'inventory_dag'
         self.dag = self.dagbag.get_dag(self.dag_id)
 
     def test_dag_load(self):

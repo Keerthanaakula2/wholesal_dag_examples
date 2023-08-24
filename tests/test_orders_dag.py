@@ -5,7 +5,7 @@ class TestOrderFulfillmentDAG(unittest.TestCase):
 
     def setUp(self):
         self.dagbag = DagBag(include_examples=False)
-        self.dag_id = 'order_fulfillment_dag'
+        self.dag_id = 'orders_dag'
         self.dag = self.dagbag.get_dag(self.dag_id)
 
     def test_dag_load(self):

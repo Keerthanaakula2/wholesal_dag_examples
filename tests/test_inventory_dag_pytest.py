@@ -8,11 +8,11 @@ def dag_bag():
 
 @pytest.fixture
 def dag(dag_bag):
-    return dag_bag.get_dag('inventory_management_dag')
+    return dag_bag.get_dag('inventory_dag')
 
 def test_dag_load(dag_bag):
     assert dag_bag.dags is not None
-    assert 'inventory_management_dag' in dag_bag.dags
+    assert 'inventory_dag' in dag_bag.dags
 
 def test_task_count(dag):
     assert len(dag.tasks) == 4
