@@ -1,7 +1,13 @@
 steps:
-  # Cloning the repository
-  - name: 'gcr.io/cloud-builders/git'
-    args: ['clone', 'https://github.com/yourkeerthanaakula2/wholesale_dag_examples', '.']
+  # Check if the directory already exists, if not, clone the repository
+  - name: 'gcr.io/cloud-builders/gsutil'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if [ ! -d "wholesale_dag_examples" ]; then
+          git clone https://github.com/Keerthanaakula2/wholesale_dag_examples
+        fi
 
   # Install dependencies
   - name: 'python:3.8'
