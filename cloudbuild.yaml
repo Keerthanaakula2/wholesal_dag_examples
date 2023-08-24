@@ -1,0 +1,16 @@
+steps:
+  # Cloning the repository
+  - name: 'gcr.io/cloud-builders/git'
+    args: ['clone', 'https://github.com/yourkeerthanaakula2/wholesale_dag_examples', '.']
+
+  # Install dependencies and run unittest tests
+  - name: 'python:3.8'
+    entrypoint: 'bash'
+    args: ['-c', 'pip install -r requirements.txt && python -m unittest discover tests -p "*_unittest.py"']
+    
+  # Install dependencies and run pytest tests
+  - name: 'python:3.8'
+    entrypoint: 'bash'
+    args: ['-c', 'pip install -r requirements.txt && pytest tests']
+
+  # ... Other steps for deployment or further testing
