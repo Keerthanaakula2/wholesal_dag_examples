@@ -1,25 +1,30 @@
 steps:
-  # Step 1: Cloning the repository
-  - name: 'gcr.io/cloud-builders/git'
-    args: ['clone', 'https://github.com/Keerthanaakula2/wholesale_dag_examples', '.']
+  # Check if the directory already exists, if not, clone the repository
+  - name: 'gcr.io/cloud-builders/gsutil'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if [ ! -d "wholesale_dag_examples" ]; then
+          git clone https://github.com/Keerthanaakula2/wholesale_dag_examples
+        else
+          echo "Directory 'wholesale_dag_examples' already exists, skipping clone step."
+        fi
 
-  # Step 2: Set up Python virtual environment and install dependencies
+  # Run unittest tests
   - name: 'python:3.10'
     entrypoint: 'bash'
     args:
       - '-c'
-      - 'python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt'
+      - |
+        cd wholesale_dag_examples
+        python -m unittest discover tests -p "*_unittest.py"
 
-  # Step 3: Run unittest tests
+  # Run pytest tests
   - name: 'python:3.10'
     entrypoint: 'bash'
     args:
       - '-c'
-      - 'source venv/bin/activate && venv/bin/python -m unittest discover tests -p "*_unittest.py"'
-
-  # Step 4: Run pytest tests
-  - name: 'python:3.10'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - 'source venv/bin/activate && venv/bin/pytest tests'
+      - |
+        cd wholesale_dag_examples
+        pytest tests
