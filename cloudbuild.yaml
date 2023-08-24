@@ -11,23 +11,26 @@ steps:
           echo "Directory 'wholesale_dag_examples' already exists, skipping clone step."
         fi
 
-  # Run unittest tests
+  # Install dependencies and run unittest tests
   - name: 'python:3.10'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
         cd wholesale_dag_examples
+        pip install -r requirements.txt
         python -m unittest discover tests -p "*_unittest.py"
 
-  # Install pytest and run pytest tests
+  # Install dependencies, install pytest, and run pytest tests
   - name: 'python:3.10'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
         cd wholesale_dag_examples
+        pip install -r requirements.txt
         pip install pytest
         pytest tests
 
   # ... Other steps for deployment or further testing.
+
