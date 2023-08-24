@@ -10,5 +10,8 @@ COPY . /app
 # Install any necessary dependencies
 RUN pip install -r requirements.txt
 
+# Install pytest
+RUN pip install pytest
+
 # Set the entrypoint
 ENTRYPOINT ["python"]
