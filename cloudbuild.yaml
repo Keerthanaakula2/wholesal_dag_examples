@@ -7,6 +7,8 @@ steps:
       - |
         if [ ! -d "wholesale_dag_examples" ]; then
           git clone https://github.com/Keerthanaakula2/wholesale_dag_examples
+        else
+          echo "Directory 'wholesale_dag_examples' already exists, skipping clone step."
         fi
 
   # Install dependencies
