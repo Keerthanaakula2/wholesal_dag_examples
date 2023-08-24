@@ -1,39 +1,25 @@
 steps:
-  # Check if the directory already exists, if not, clone the repository
-  - name: 'gcr.io/cloud-builders/gsutil'
+  # Step 1: Cloning the repository
+  - name: 'gcr.io/cloud-builders/git'
+    args: ['clone', 'https://github.com/Keerthanaakula2/wholesale_dag_examples', '.']
+
+  # Step 2: Set up Python virtual environment and install dependencies
+  - name: 'python:3.10'
     entrypoint: 'bash'
     args:
       - '-c'
-      - |
-        if [ ! -d "wholesale_dag_examples" ]; then
-          git clone https://github.com/Keerthanaakula2/wholesale_dag_examples
-        else
-          echo "Directory 'wholesale_dag_examples' already exists, skipping clone step."
-        fi
+      - 'python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt'
 
-  # Install dependencies
+  # Step 3: Run unittest tests
   - name: 'python:3.10'
     entrypoint: 'bash'
-    args: ['-c', 'pip install -r requirements.txt']
+    args:
+      - '-c'
+      - 'source venv/bin/activate && venv/bin/python -m unittest discover tests -p "*_unittest.py"'
 
-  # Run Unittest tests for inventory_management_dag
+  # Step 4: Run pytest tests
   - name: 'python:3.10'
     entrypoint: 'bash'
-    args: ['-c', 'python -m unittest discover tests -p "*_unittest.py"']
-
-  # Run Unittest tests for order_fulfillment_dag
-  - name: 'python:3.10'
-    entrypoint: 'bash'
-    args: ['-c', 'python -m unittest discover tests -p "*_unittest.py"']
-
-  # Run Pytest tests for inventory_management_dag
-  - name: 'python:3.10'
-    entrypoint: 'bash'
-    args: ['-c', 'pytest tests']
-
-  # Run Pytest tests for order_fulfillment_dag
-  - name: 'python:3.10'
-    entrypoint: 'bash'
-    args: ['-c', 'pytest tests']
-
-# ... Other steps for deployment or further testing
+    args:
+      - '-c'
+      - 'source venv/bin/activate && venv/bin/pytest tests'
