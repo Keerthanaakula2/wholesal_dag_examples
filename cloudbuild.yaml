@@ -12,27 +12,27 @@ steps:
         fi
 
   # Install dependencies
-  - name: 'python:3.8'
+  - name: 'python:3.10'
     entrypoint: 'bash'
     args: ['-c', 'pip install -r requirements.txt']
 
   # Run Unittest tests for inventory_management_dag
-  - name: 'python:3.8'
+  - name: 'python:3.10'
     entrypoint: 'bash'
     args: ['-c', 'python -m unittest discover tests -p "*_unittest.py"']
 
   # Run Unittest tests for order_fulfillment_dag
-  - name: 'python:3.8'
+  - name: 'python:3.10'
     entrypoint: 'bash'
     args: ['-c', 'python -m unittest discover tests -p "*_unittest.py"']
 
   # Run Pytest tests for inventory_management_dag
-  - name: 'python:3.8'
+  - name: 'python:3.10'
     entrypoint: 'bash'
     args: ['-c', 'pytest tests']
 
   # Run Pytest tests for order_fulfillment_dag
-  - name: 'python:3.8'
+  - name: 'python:3.10'
     entrypoint: 'bash'
     args: ['-c', 'pytest tests']
 
