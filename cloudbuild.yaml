@@ -3,14 +3,29 @@ steps:
   - name: 'gcr.io/cloud-builders/git'
     args: ['clone', 'https://github.com/yourkeerthanaakula2/wholesale_dag_examples', '.']
 
-  # Install dependencies and run unittest tests
+  # Install dependencies
   - name: 'python:3.8'
     entrypoint: 'bash'
-    args: ['-c', 'pip install -r requirements.txt && python -m unittest discover tests -p "*_unittest.py"']
-    
-  # Install dependencies and run pytest tests
-  - name: 'python:3.8'
-    entrypoint: 'bash'
-    args: ['-c', 'pip install -r requirements.txt && pytest tests']
+    args: ['-c', 'pip install -r requirements.txt']
 
-  # ... Other steps for deployment or further testing
+  # Run Unittest tests for inventory_management_dag
+  - name: 'python:3.8'
+    entrypoint: 'bash'
+    args: ['-c', 'python -m unittest discover tests -p "*_unittest.py"']
+
+  # Run Unittest tests for order_fulfillment_dag
+  - name: 'python:3.8'
+    entrypoint: 'bash'
+    args: ['-c', 'python -m unittest discover tests -p "*_unittest.py"']
+
+  # Run Pytest tests for inventory_management_dag
+  - name: 'python:3.8'
+    entrypoint: 'bash'
+    args: ['-c', 'pytest tests']
+
+  # Run Pytest tests for order_fulfillment_dag
+  - name: 'python:3.8'
+    entrypoint: 'bash'
+    args: ['-c', 'pytest tests']
+
+# ... Other steps for deployment or further testing
